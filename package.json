@@ -1,0 +1,23 @@
+{
+  "name": "nodeace",
+  "version": "0.0.1",
+  "description": "node-webkit ace editor",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "~0.4.5",
+    "grunt-node-webkit-builder": "~0.1.21"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-node-webkit-builder": "^0.1.21"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ace",
+    "node-webkit"
+  ],
+  "author": "NovemberEleven",
+  "license": "ISC"
+}
