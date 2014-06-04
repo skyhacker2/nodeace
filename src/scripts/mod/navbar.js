@@ -1,6 +1,7 @@
-define(['jquery'], function($) {
+define(['jquery', './modal', './config'], function($, Modal, config) {
 	var fs = require('fs');
 	var gui = require('nw.gui');
+	var EventEmitter = require('events').EventEmitter
 	var win = gui.Window.get();
 	var appConfig = require('./package.json');
 	var _navbar = null;
@@ -8,7 +9,6 @@ define(['jquery'], function($) {
 	var Navbar = function() {
 		this.themeMenu = $('#theme-menu');
 		this.modeMenu = $('#syntax-menu');
-		this._bindEvent();
 	}
 
 	Navbar.prototype = {
@@ -16,6 +16,7 @@ define(['jquery'], function($) {
 		selectTheme: function(theme) {
 			$('[data-theme]').parent().removeClass('active');
 			$("[data-theme='" + theme + "']").parent().addClass('active');
+			window.localStorage.aceTheme = theme;
 		},
 		selectMode: function(mode) {
 			$('[data-syntax]').parent().removeClass('active');
@@ -42,6 +43,14 @@ define(['jquery'], function($) {
 				$syntaxMenu.append(li);
 			});
 		},
+		newFile: function() {
+			var options = {
+				x: window.screenX + 10,
+				y: window.screenY + 10
+			};
+			$.extend(options, appConfig.window);
+    		var win = gui.Window.open('index.html', options);
+		},
 		openFile: function(file) {
 			var options = {
 				x: window.screenX + 10,
@@ -55,15 +64,41 @@ define(['jquery'], function($) {
 			if (win.curFile && win.editor.hasChanged) {
 				win.editor.hasChanged = false;
 				win.editor.saveFile(win.curFile);
+				this.emit('saved');
 			} else {
-				$('#saveFile').click();
+				this.saveFileAs();
 			}
 		},
 		saveFileAs: function(file) {
-
+			$('#saveFile').click();
 		},
 		closeFile: function() {
-
+			if (win.editor.hasChanged) {
+				var modal = new Modal('myModal');
+				var navbar = this;
+				var opt = {
+					btns: [{
+						text: '取消',
+						click: function() {
+							win.close();
+						}
+					}, {
+						text: '保存',
+						className: 'btn-primary',
+						click: function() {
+							modal.hide();
+							navbar.on('saved', function() {
+								win.close();
+							});
+							navbar.saveFile();
+						}				
+					}
+					]
+				};
+				modal.show(opt);
+			} else {
+				win.close();
+			}
 		},
 		_bindEvent: function() {
 			var that = this;
@@ -75,39 +110,45 @@ define(['jquery'], function($) {
 			});
 			$('#saveFile').change(function() {
 				win.editor.saveFile($(this).val());
+				that.emit('saved');
 			});
-			$('#save').click(this.saveFile);
+			$('#save').click(function() {
+				that.saveFile();
+			});
+			$('#save-as').click(function() {
+				that.saveFileAs();
+			});
+			$('#close').click(function() {
+				that.closeFile();
+			});
+			$('#new').click(function() {
+				that.newFile();
+			});
+			$('#theme-menu a').on('click', function() {
+				var theme = $(this).data('theme');
+				that.selectTheme(theme);
+				win.editor.setTheme('ace/theme/' + theme);
+			});
+			$('#syntax-menu a').click(function() {
+				var mode = $(this).data('syntax');
+				that.selectMode(mode);
+				win.editor.getSession().setMode('ace/mode/' + mode);
+			});
 		}
 
 	};
-
-	var themes = [
-		"ambiance",
-		"chaos",
-		"chrome",
-		"clouds",
-		"clouds_midnight",
-		"cobalt",
-		"crimson_editor"
-	];
-	var syntaxs = [
-		"html",
-		"css",
-		"javascript",
-		"java",
-		"json",
-		"markdown",
-		"c_cpp",
-		"text"
-	];
 
 	Navbar.init = function() {
 		if (_navbar) {
 			return _navbar;
 		}
 		var navbar = new Navbar();
-		navbar._initModeList(syntaxs);
-		navbar._initThemeList(themes);
+		navbar._initModeList(config.modeList);
+		navbar._initThemeList(config.themeList);
+		navbar._bindEvent();
+		var emittor = new EventEmitter();
+		$.extend(navbar, emittor);
+		console.log(navbar);
 		_navbar = navbar;
 		return navbar;
 	}

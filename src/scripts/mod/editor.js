@@ -26,19 +26,16 @@ define(['jquery', 'ace'], function($) {
 	};
 
 	Editor.init = function(ele, mode, theme) {
-		if (_editor) {
-			return _editor;
-		}
 		var editor = new Editor(ele, mode, theme);
 		editor.setTheme("ace/theme/" + theme);
 		editor.getSession().setMode("ace/mode/" + mode);
 		editor.getSession().on('change', function() {
+			editor.hasChanged = true;
 			if (win.curFile) {
-				editor.hasChanged = true;
 				$('title').text('*' + win.curFile);
 			}
+
 		});
-		_editor = editor;
 		return editor;
 	}
 	return Editor;
