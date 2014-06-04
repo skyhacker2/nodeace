@@ -11,6 +11,14 @@
 4. jquery
 5. bootstrap
 
+##安装
+
+```
+npm install
+
+```
+
+
 ##编译
 
 修改Gruntfile.js设置需要编译的版本。
