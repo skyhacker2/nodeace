@@ -16,7 +16,7 @@ define(
 		var fs = require('fs');
 		var win = gui.Window.get();
 		win.show();
-		console.log(window.localStorage.aceTheme);
+
 		var theme = window.localStorage.aceTheme || config.theme;
 		var editor = Editor.init('na-editor', config.mode, theme);
 		win.editor = editor;
@@ -47,5 +47,11 @@ define(
 			$('title').text('Untitled');
 		}
 
+		$(document.body).mousemove(function() {
+			editor.focus();
+		});
+		$(document.body).mouseup(function() {
+			editor.focus();
+		});
 	}
 );

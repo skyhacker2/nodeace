@@ -1,6 +1,6 @@
 #Node Ace Editor
 
-##介绍
+###介绍
 使用node-webkit封装ace编辑器。
 
 使用了：
