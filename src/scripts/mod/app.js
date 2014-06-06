@@ -1,18 +1,24 @@
-define(['require','exports', 'module', 'jquery', './editor','./navbar', './config', 'bootstrap', 'art'], 
+define(
+	['require','exports', 'module', 
+		'jquery', 
+		'./editor',
+		'./navbar', 
+		'./config', 
+		'bootstrap', 
+		'art'], 
 	function(requirejs, exports, module) {
 		var $ = requirejs('jquery'),
 			Navbar = requirejs('./navbar'),
 			config = requirejs('./config'),
 			Editor = requirejs('./editor'),
-			art = requirejs('art'),
-			path = require('path');
+			art = requirejs('art');
 		var gui = require('nw.gui');
 		var fs = require('fs');
 		var win = gui.Window.get();
 		win.show();
 		console.log(window.localStorage.aceTheme);
 		var theme = window.localStorage.aceTheme || config.theme;
-		var editor = Editor.init('editor', config.mode, theme);
+		var editor = Editor.init('na-editor', config.mode, theme);
 		win.editor = editor;
 
 		var navbar = Navbar.init();
@@ -26,15 +32,16 @@ define(['require','exports', 'module', 'jquery', './editor','./navbar', './confi
 		console.log(win.curFile);
 
 		if (win.curFile) {
-			editor.openFile(win.curFile);
 			var dotIndex = win.curFile.lastIndexOf('.');
 			var extName = win.curFile.substr(dotIndex+1, win.curFile.length - dotIndex-1);
 			extName = extName.toLowerCase();
 			console.log(extName);
 			//var extName = win.curFile.split('.')[1];
 			var mode = config.extendNameModeMap[extName] || 'text';
-			editor.getSession().setMode('ace/mode/' + mode);
+			console.log(mode);
+			editor.setMode(mode);
 			navbar.selectMode(mode);
+			editor.openFile(win.curFile);
 			$('title').text(win.curFile);
 		} else {
 			$('title').text('Untitled');

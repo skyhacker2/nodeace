@@ -1,4 +1,4 @@
-define(['jquery', './modal', './config'], function($, Modal, config) {
+define(['jquery', './modal', './config', 'tplLoader'], function($, Modal, config, tplLoader) {
 	var fs = require('fs');
 	var gui = require('nw.gui');
 	var EventEmitter = require('events').EventEmitter
@@ -132,7 +132,7 @@ define(['jquery', './modal', './config'], function($, Modal, config) {
 			$('#syntax-menu a').click(function() {
 				var mode = $(this).data('syntax');
 				that.selectMode(mode);
-				win.editor.getSession().setMode('ace/mode/' + mode);
+				win.editor.setMode(mode);
 			});
 		}
 
@@ -142,6 +142,8 @@ define(['jquery', './modal', './config'], function($, Modal, config) {
 		if (_navbar) {
 			return _navbar;
 		}
+		var html = tplLoader.render('views/navbar.tpl.html');
+		$('#na-navbar').html(html);
 		var navbar = new Navbar();
 		navbar._initModeList(config.modeList);
 		navbar._initThemeList(config.themeList);

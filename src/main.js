@@ -9,7 +9,8 @@ requirejs.config({
 		"bootstrap": 'lib/bootstrap-3.1.1-dist/js/bootstrap',
 		"ace": 'lib/ace-noconflict/ace',
 		'art': 'lib/artTemplate/main',
-		'tplLoader': 'lib/tpl-loader/main'
+		'tplLoader': 'lib/tpl-loader/main',
+		'marked': 'lib/marked/marked'
 	},
 	shim: {
 		"bootstrap": {

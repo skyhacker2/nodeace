@@ -1,14 +1,27 @@
 body {
 	overflow: hidden;
 }
-.editor {
+.na-editor {
 	position: absolute !important;
 	top: 50px;
 	left: 0px;
-	right: 0px;
 	bottom: 0px;
 	margin: 0px;
+	width: 100%;
 }
 .navbar {
 	border-radius: 0px !important;
+}
+
+#na-preview {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 50%;
+	margin: 0px;
+	bottom: 0px;
+	border-left: 1px solid #333;
+	overflow: auto;
+	padding: 10px;
+	padding-top: 50px;
 }

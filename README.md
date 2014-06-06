@@ -5,19 +5,18 @@
 
 使用了：
 
-1. ace.js
-2. require.js
-3. artTemplate.js
-4. jquery
-5. bootstrap
+1. [ace.js](https://github.com/ajaxorg/ace)
+2. [require.js](http://requirejs.org/)
+3. [artTemplate.js](https://github.com/aui/artTemplate)
+4. [jquery](http://jquery.com/)
+5. [bootstrap](http://getbootstrap.com/)
+6. [marked.js](https://github.com/chjj/marked)
 
 ##安装
 
 ```
 npm install
-
 ```
-
 
 ##编译
 
@@ -48,6 +47,9 @@ grunt.initConfig({
 
 ## 截图
 ![image](http://git.oschina.net/nov_eleven/photo/raw/master/nodeace.png)
+
+###支持markdown预览
+![image](http://git.oschina.net/nov_eleven/photo/raw/master/nodeace-md.png)
 
 ## 后续任务
 
