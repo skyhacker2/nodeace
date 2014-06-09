@@ -2,6 +2,7 @@ define(['jquery', 'ace', 'tplLoader', '../lib/markdown/markdown', 'marked', './p
 	function($, ace, tplLoader, Markdown, marked, Preview, config) {
 		var fs = require('fs');
 		var gui = require('nw.gui');
+		var lang = require('./scripts/lang/main');
 		var win = gui.Window.get();
 		var clipboard = gui.Clipboard.get();
 		var _editor = null;
@@ -20,7 +21,6 @@ define(['jquery', 'ace', 'tplLoader', '../lib/markdown/markdown', 'marked', './p
 				var fileEntity = fs.readFileSync(filePath, 'utf-8');
 				this.getSession().setValue(fileEntity);
 				var mode = this.getMode();
-				console.log(mode);
 				this.onChange();
 				this.focus();
 			},
@@ -78,20 +78,20 @@ define(['jquery', 'ace', 'tplLoader', '../lib/markdown/markdown', 'marked', './p
 				var editor = this;
 				menu = new gui.Menu();
 			 	menu.append(new gui.MenuItem({
-			    	label: '复制       ⌘ C',
+			    	label: lang.menuLabel.copy,
 			    	click: function() {
 			      		clipboard.set(editor.getCopyText());
 			    	}
 			  	}));
 			  	menu.append(new gui.MenuItem({
-			    	label: '剪切       ⌘ X',
+			    	label: lang.menuLabel.cut,
 			    	click: function() {
 			      		clipboard.set(editor.getCopyText());
 			      		editor.getSession().replace(editor.selection.getRange(), "");
 			    	}
 			  	}));
 			  	menu.append(new gui.MenuItem({
-			    	label: '粘贴       ⌘ V',
+			    	label: lang.menuLabel.paste,
 			    	click: function() {
 			      		editor.insert(clipboard.get());
 			    	}

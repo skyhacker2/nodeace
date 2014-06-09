@@ -5,7 +5,7 @@ module.exports = function(grunt) {
               build_dir: './build', 
               credits: './src/credits.html',
               mac: true, // build it for mac
-              win: false, // build it for win
+              win: true, // build it for win
               linux32: false, // build it for linux32
               linux64: false, // build it for linux64
           },

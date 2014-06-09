@@ -1,5 +1,6 @@
 body {
 	overflow: hidden;
+	font-family: "方正兰亭黑","STHeiti","华文黑体","Microsoft YaHei","微软雅黑","STHei","华文黑体","Helvetica Neue","Helvetica","sans-serif";
 }
 .na-editor {
 	position: absolute !important;
