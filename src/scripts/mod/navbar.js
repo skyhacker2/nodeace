@@ -1,4 +1,4 @@
-define(['jquery', './modal', './config', 'tplLoader'], function($, Modal, config, tplLoader) {
+define(['jquery', './modal', './config', 'tplLoader'], function($, Modal, config, TplLoader) {
 	var fs = require('fs');
 	var gui = require('nw.gui');
 	var EventEmitter = require('events').EventEmitter
@@ -142,7 +142,8 @@ define(['jquery', './modal', './config', 'tplLoader'], function($, Modal, config
 		if (_navbar) {
 			return _navbar;
 		}
-		var html = tplLoader.render('views/navbar.tpl.html');
+		var tplLoader = new TplLoader('views/navbar.tpl.html');
+		var html = tplLoader.render();
 		$('#na-navbar').html(html);
 		var navbar = new Navbar();
 		navbar._initModeList(config.modeList);

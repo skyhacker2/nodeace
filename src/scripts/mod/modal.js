@@ -1,4 +1,4 @@
-define(['jquery', 'tplLoader'], function($, tplLoader) {
+define(['jquery', 'tplLoader'], function($, TplLoader) {
 	var fs = require('fs');
 	var Modal = function(id) {
 		this.id = id;
@@ -22,7 +22,8 @@ define(['jquery', 'tplLoader'], function($, tplLoader) {
 				});
 			}
 			var data = {id: this.id, title: "对话框", body: "你的修改未保存", btns: btnsHtml.join('')};
-			$('body').append(tplLoader.render('views/modal.tpl.html', data));
+			var tplLoader = new TplLoader('views/modal.tpl.html');
+			$('body').append(tplLoader.render(data));
 			var dialogObj = $("#" + this.id);
 			
 			dialogObj.on('hidden.bs.modal', function(evt) {

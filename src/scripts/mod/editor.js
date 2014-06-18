@@ -1,5 +1,5 @@
 define(['jquery', 'ace', 'tplLoader', '../lib/markdown/markdown', 'marked', './preview', './config'], 
-	function($, ace, tplLoader, Markdown, marked, Preview, config) {
+	function($, ace, TplLoader, Markdown, marked, Preview, config) {
 		var fs = require('fs');
 		var gui = require('nw.gui');
 		var lang = require('./scripts/lang/main');
@@ -134,7 +134,8 @@ define(['jquery', 'ace', 'tplLoader', '../lib/markdown/markdown', 'marked', './p
 		};
 
 		Editor.init = function(ele, mode, theme) {
-			var html = tplLoader.render('views/editor.tpl.html');
+			var tplLoader = new TplLoader('views/editor.tpl.html');
+			var html = tplLoader.render();
 			$('#na-content').html(html);
 			var editor = new Editor(ele, mode, theme);
 			editor.setTheme("ace/theme/" + theme);

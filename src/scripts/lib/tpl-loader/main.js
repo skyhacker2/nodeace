@@ -2,10 +2,21 @@ define(['require', 'exports', 'module', 'art'], function(requirejs, exports, mod
 	var art = requirejs('art');
 	var fs = require('fs');
 
-	TplLoader = {};
-	TplLoader.render= function(tplName, data){
-		var html = art.compile(fs.readFileSync(tplName, 'utf-8'))(data);
-		return html;
+	TplLoader = function(tplName) {
+		this.tplName = tplName;
 	}
+	TplLoader.prototype = {
+		constructor: TplLoader,
+		setTpl: function(tplName) {
+			this.artRender = art.compile(fs.readFileSync(tplName, 'utf-8'));
+		},
+		render: function(data) {
+			if (!this.artRender) {
+				this.setTpl(this.tplName);
+			}
+			return this.artRender(data);
+		}
+	}
+
 	return TplLoader;
 });
