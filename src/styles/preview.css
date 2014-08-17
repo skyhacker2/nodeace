@@ -1,4 +1,5 @@
 img {
+	max-width: 600px;
 	width: auto;
 	height: auto;
 }

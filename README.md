@@ -14,6 +14,7 @@
 
 ##安装
 
+
 ```
 npm install
 ```
@@ -41,6 +42,7 @@ grunt.initConfig({
 
 输入`grunt`进行编译，编译后的版本会在build目录下。
 
+
 ## 不编译运行
 
 直接输入`nw src [filename]`运行。
@@ -51,8 +53,3 @@ grunt.initConfig({
 ###支持markdown预览
 ![image](http://git.oschina.net/nov_eleven/photo/raw/master/nodeace-md.png)
 
-## 后续任务
-
-1. 添加右键菜单。
-2. 添加快捷键。
-3. markdown编辑实时预览。
